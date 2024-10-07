@@ -1,6 +1,6 @@
 package submission
 
-import rego.v1x``z
+import rego.v1
 
 input_oe := input.action.fields_input_action_permission.oe
 
