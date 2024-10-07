@@ -41,8 +41,8 @@ create_allow if {
 
 
 	# check if the duration is allowed for that level
-	level := role.authorityGrid[0].level   
-	in_normal_bounds(input_lta_duration, lta_bounds_list[level])
+	#level := role.authorityGrid[0].level   
+	#in_normal_bounds(input_lta_duration, lta_bounds_list[level])
    
 }
 
