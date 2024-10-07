@@ -49,7 +49,7 @@ action_allowed(role, oe, lob) if {
     role.lob == lob
 }
 
-# Allow read if there is an "uw" role in the same region
+# Allow if we read, and there is an "uw" role in the same region
 action_allowed(_, oe, _) if {
     input.action.name == "read"
     some otherRole in input.subject.role
@@ -57,7 +57,7 @@ action_allowed(_, oe, _) if {
     oe in region_oes[otherRole.region]
 }
 
-# Allow read if there is an "arc" role in the same region
+# Allow if we read, and there is an "arc" role in the same region
 action_allowed(_, oe, _) if {
     input.action.name == "read"
     some otherRole in input.subject.role
