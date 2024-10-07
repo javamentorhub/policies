@@ -1,7 +1,5 @@
 package submission
 
-import rego.v1
-
 input_oe := input.action.fields_input_action_permission.oe
 input_lob := input.action.fields_input_action_permission.lob
 input_lta_duration := input.action.fields_input_auth_grid.lta.duration
@@ -13,8 +11,6 @@ region_oes := {
 
 # Format: [lowerbound normal A, upperbound normal A, upperbound LTA]
 lta_bounds_list := {
-    # level | min period | max period without ref. | max period with ref.
-    # null = no limit
     "d2": [0, 24, null],
     "d1": [0, 24, null],
     "c2": [0, 18, 24],
@@ -34,14 +30,14 @@ create_allow if {
     in_normal_bounds(input_lta_duration, lta_bounds_list[level])
 }
 
-# Check if action is allowed
+# Check if action is allowed for 'uw' role
 action_allowed(role, oe, lob) if {
     role.position == "uw"
     role.oe == oe
     role.lob == lob
 }
 
-# Check if action is allowed for read
+# Check if action is allowed for 'arc' role
 action_allowed(role, oe, lob) if {
     input.action.name == "read"
     role.position == "arc"
@@ -65,18 +61,20 @@ action_allowed(_, oe, _) if {
     oe in region_oes[otherRole.region]
 }
 
-in_lta_bounds(duration, bounds) := true if {
+# Check if duration is within LTA bounds
+in_lta_bounds(duration, bounds) := {
     bounds[2] != null
     duration >= bounds[1]
     duration <= bounds[2]
-} else := true if {
+} else {
     bounds[2] == null
     duration >= bounds[1]
-} else := false
+}
 
-in_normal_bounds(duration, bounds) := true if {
+# Check if duration is within normal bounds
+in_normal_bounds(duration, bounds) := {
     duration <= bounds[1]
-} else := false
+}
 
 default create_error_message := "Action not allowed!"
 
