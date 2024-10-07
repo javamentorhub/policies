@@ -1,5 +1,7 @@
 package submission
 
+import future.keywords.in  # Enable the future 'in' keyword support
+
 input_oe := input.action.fields_input_action_permission.oe
 input_lob := input.action.fields_input_action_permission.lob
 input_lta_duration := input.action.fields_input_auth_grid.lta.duration
