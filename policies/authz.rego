@@ -1,6 +1,7 @@
 package submission
 
-import future.keywords.in  # Enable the future 'in' keyword support
+import rego.v1
+
 
 input_oe := input.action.fields_input_action_permission.oe
 input_lob := input.action.fields_input_action_permission.lob
